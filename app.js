@@ -22,8 +22,13 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use(express.static('public'))
+
 // Routes
 app.use('/', require('./routes/auth'));
+app.use('/', require('./routes/google'));
+
+
 
 app.listen(PORT, () => {
     console.log(`App listening on port: ${PORT}`);
