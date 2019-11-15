@@ -8,6 +8,9 @@ const mongoose = require('mongoose');
 // Init
 const app = express();
 
+// Enable Cors
+app.use(cors());
+
 // Mongo Atlas connect
 mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
@@ -22,8 +25,12 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Allow access to public folder
+app.use(express.static('public'))
+
 // Routes
 app.use('/', require('./routes/auth'));
+app.use('/', require('./routes/google'));
 
 app.listen(PORT, () => {
     console.log(`App listening on port: ${PORT}`);
