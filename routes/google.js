@@ -24,7 +24,7 @@ router.get('/google/redirect_uri', async (req, res) => {
 
     user.save()
         .then(savedUser => {
-            res.json( { user: savedUser.getBasicData() });
+            res.json( { user: savedUser.getBasicData(), tokenBack: tokens, savedTokens: savedUser.apis.google_drive.tokens });
             // Here we need to redirect to the front end application
         })
         .catch(err => {
