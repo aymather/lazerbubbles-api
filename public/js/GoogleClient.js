@@ -24,7 +24,11 @@ class GoogleClient {
             hash,
             user_id
         })
-        return this.OAuth2Client.generateAuthUrl({ scope: this.scopes, state }) 
+        return this.OAuth2Client.generateAuthUrl({ 
+            scope: this.scopes, 
+            state,
+            access_type: 'offline'
+        }) 
     }
 
     get_access_token(code) { return this.OAuth2Client.getToken(code); }
