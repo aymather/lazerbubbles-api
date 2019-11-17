@@ -10,7 +10,7 @@ var {
 const OAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
 
 class GoogleClient {
-    constructor(){
+    constructor() {
         this.scopes = ['https://www.googleapis.com/auth/drive.metadata.readonly'];
         this.OAuth2Client = OAuth2Client;
     }
@@ -25,6 +25,27 @@ class GoogleClient {
     }
 
     get_access_token(code) { return this.OAuth2Client.getToken(code); }
+
+    get_google_sheets() {
+        console.log('here');
+        // Create the google drive client
+        const drive = google.drive({ version: 'v3', auth: this.OAuth2Client });
+        console.log(drive);
+        // Get only the google sheets
+        drive.files.list({
+            pageSize: 10,
+            fields: 'nextPageToken, files(id, name)',
+            q: "mimeType='application/vnd.google-apps.spreadsheet'"
+        })
+        .then(res => {
+            console.log('Got response');
+            return res.data.files;
+        })
+        .catch(err => {
+            console.log('Got error');
+            return err;
+        })
+    }
 }
 
 module.exports = new GoogleClient();
