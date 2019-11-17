@@ -26,11 +26,14 @@ class GoogleClient {
 
     get_access_token(code) { return this.OAuth2Client.getToken(code); }
 
-    get_google_sheets() {
+    get_google_sheets(credentials) {
         console.log('here');
+        // First set the credentials with tokens
+        this.OAuth2Client.setCredentials(credentials);
+
         // Create the google drive client
         const drive = google.drive({ version: 'v3', auth: this.OAuth2Client });
-        console.log(drive);
+
         // Get only the google sheets
         drive.files.list({
             pageSize: 10,

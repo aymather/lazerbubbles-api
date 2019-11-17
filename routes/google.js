@@ -13,28 +13,32 @@ router.get('/google/redirect_uri', async (req, res) => {
 
     // Exchage the one-time code for an access token
     var response = await client.get_access_token(code);
-    console.log(response);
-    res.json({ response });
-    // Save access_token to database
-    // var { access_token, expiry_date } = response.tokens;
-    // var user = await User.findById(JSON.parse(state).user_id);
-    // if(!user){
-    //     return res.status(400).json({ msg: "User id does not exist, this request may have been tampered with by a CSRF attack" });
-    // }
-    // user.apis.google_drive.access_token = access_token;
-    // user.apis.google_drive.expiry_date = expiry_date;
 
-    // user.save()
-    //     .then(savedUser => {
-    //         res.json(savedUser);
-    //     })
-    //     .catch(err => {
-    //         res.status(500).json(err);
-    //     })
+    // Save access_token to database
+    var { tokens } = response;
+    var user = await User.findById(JSON.parse(state).user_id);
+    if(!user){
+        return res.status(400).json({ msg: "User id does not exist, this request may have been tampered with by a CSRF attack" });
+    }
+    user.apis.google_drive.tokens = tokens;
+
+    user.save()
+        .then(savedUser => {
+            res.json( { user: savedUser.returnBasicData() });
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        })
 })
 
-router.get('/google/sheets', authMiddleware, (req, res) => {
-    var data = client.get_google_sheets();
+router.get('/google/sheets', authMiddleware, async (req, res) => {
+    // First get the user's api credentials
+    var user = await User.findById(req.user.id);
+    var { tokens } = user.api.google_drive;
+
+    // Use that to get a list of the google sheets
+    var data = client.get_google_sheets(tokens);
+
     console.log(data);
     res.json(data);
 })

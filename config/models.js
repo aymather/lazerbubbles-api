@@ -6,15 +6,27 @@ const UserSchema = new Schema({
     password: { type: String, required: true },
     apis: {
         google_drive: {
-            access_token: { type: String },
-            expiry_date: { type: Number }
+            tokens: {
+                access_token: { type: String },
+                expiry_date: { type: Number },
+                scope: { type: String },
+                token_type: { type: String }
+            }
         },
         google_sheets: {
-            access_token: { type: String },
-            expiry_date: { type: Number }
+            tokens: {
+                access_token: { type: String },
+                expiry_date: { type: Number },
+                scope: { type: String },
+                token_type: { type: String }
+            }
         }
     }
 })
+
+UserSchema.methods.returnBasicData = () => {
+    return { email: this.email }
+}
 
 const User = mongoose.model('User', UserSchema);
 module.exports = User;
