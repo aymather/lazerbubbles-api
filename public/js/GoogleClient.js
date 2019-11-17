@@ -55,7 +55,7 @@ class GoogleClient {
         // Use that client to get the specific google sheet
         return sheets.spreadsheets.values.get({
             spreadsheetId: sheet_id,
-            range: 'Sheet1!A1:D3'
+            range: 'Sheet1!A:Z'
         })
     }
 }

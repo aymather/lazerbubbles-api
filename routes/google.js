@@ -58,7 +58,7 @@ router.get('/google/sheet', authMiddleware, async (req, res) => {
     const { tokens } = user.apis.google_drive;
 
     var sheet_data = await client.get_sheet(tokens, sheet_id);
-    res.json(sheet_data);
+    res.json({ matrix: sheet_data.data });
 })
 
 module.exports = router;
