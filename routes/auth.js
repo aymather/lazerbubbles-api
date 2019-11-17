@@ -6,12 +6,6 @@ const bcrypt = require('bcryptjs');
 const User = require('../config/models');
 const authMiddleware = require('../middleware/auth');
 
-router.get('/test', authMiddleware, async (req, res) => {
-    var user = User.findById(req.user.id);
-    console.log(user.getBasicData());
-    res.json(user.getBasicData());
-})
-
 router.get('/user', authMiddleware, async (req, res) => {
     var user = await User.findById(req.user.id).select('-password').select('-__v');
     

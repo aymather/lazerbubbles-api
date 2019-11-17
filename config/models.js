@@ -24,7 +24,7 @@ const UserSchema = new Schema({
     }
 })
 
-UserSchema.methods.getBasicData = () => {
+UserSchema.methods.getBasicData = function() {
     return { email: this.email }
 }
 

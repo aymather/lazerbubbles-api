@@ -24,7 +24,7 @@ router.get('/google/redirect_uri', async (req, res) => {
 
     user.save()
         .then(savedUser => {
-            res.json( { user: savedUser.returnBasicData() });
+            res.json( { user: savedUser.getBasicData() });
         })
         .catch(err => {
             res.status(500).json(err);
