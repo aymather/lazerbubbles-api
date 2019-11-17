@@ -11,7 +11,7 @@ router.get('/user', authMiddleware, async (req, res) => {
     
     if(!user) return res.status(400).json({ msg: "User with that ID does not exist" });
 
-    res.json(user);
+    res.json(user.getBasicData());
 })
 
 router.post('/create-account', async (req, res) => {

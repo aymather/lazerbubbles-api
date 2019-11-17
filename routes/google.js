@@ -25,6 +25,7 @@ router.get('/google/redirect_uri', async (req, res) => {
     user.save()
         .then(savedUser => {
             res.json( { user: savedUser.getBasicData() });
+            // Here we need to redirect to the front end application
         })
         .catch(err => {
             res.status(500).json(err);
@@ -34,13 +35,30 @@ router.get('/google/redirect_uri', async (req, res) => {
 router.get('/google/sheets', authMiddleware, async (req, res) => {
     // First get the user's api credentials
     var user = await User.findById(req.user.id);
-    var { tokens } = user.api.google_drive;
+
+    // Check to see if there's a nextPageToken
+    var nextPageToken = req.query.nextPageToken;
+
+    // Extract the user's token information
+    var { tokens } = user.apis.google_drive;
 
     // Use that to get a list of the google sheets
-    var data = client.get_google_sheets(tokens);
+    var data = await client.get_google_sheets(tokens, nextPageToken);
 
-    console.log(data);
-    res.json(data);
+    // Return a list of the files ids
+    res.json({
+        files: data.data.files,
+        nextPageToken: data.data.nextPageToken
+    });
+})
+
+router.get('/google/sheet', authMiddleware, async (req, res) => {
+    const { sheet_id } = req.query;
+    const user = await User.findById(req.user.id);
+    const { tokens } = user.apis.google_drive;
+
+    var sheet_data = await client.get_sheet(tokens, sheet_id);
+    res.json(sheet_data);
 })
 
 module.exports = router;
