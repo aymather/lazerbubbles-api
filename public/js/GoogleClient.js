@@ -45,7 +45,7 @@ class GoogleClient {
         })
     }
 
-    get_sheet(credentials, sheet_id) {
+    get_sheet(credentials, options) {
         // Set credentials
         this.OAuth2Client.setCredentials(credentials);
 
@@ -54,8 +54,8 @@ class GoogleClient {
 
         // Use that client to get the specific google sheet
         return sheets.spreadsheets.values.get({
-            spreadsheetId: sheet_id,
-            range: 'Sheet1!A:Z'
+            spreadsheetId: options.sheet_id,
+            range: `${options.sheet_name}!${options.select_1}:${options.select_2}`
         })
     }
 }

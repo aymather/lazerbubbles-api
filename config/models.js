@@ -8,14 +8,7 @@ const UserSchema = new Schema({
         google_drive: {
             tokens: {
                 access_token: { type: String },
-                expiry_date: { type: Number },
-                scope: { type: String },
-                token_type: { type: String }
-            }
-        },
-        google_sheets: {
-            tokens: {
-                access_token: { type: String },
+                refresh_token: { type: String },
                 expiry_date: { type: Number },
                 scope: { type: String },
                 token_type: { type: String }

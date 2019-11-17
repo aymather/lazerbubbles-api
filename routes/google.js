@@ -53,11 +53,34 @@ router.get('/google/sheets', authMiddleware, async (req, res) => {
 })
 
 router.get('/google/sheet', authMiddleware, async (req, res) => {
-    const { sheet_id } = req.query;
+    // We need the sheet_id, sheet_name and rows/columns to select
+    const { 
+        sheet_id, 
+        sheet_name,
+        select_1,
+        select_2
+    } = req.query;
+
+    // Make sure we have all the inputs
+    if(!sheet_id || !sheet_name || !select_1 || !select_2) return res.status(400).json({
+        msg: "Missing inputs, make sure you have all of the following:\nsheet_id,\nsheet_name,\nselect_1,\nselect_2"
+    })
+
+    // Get the user
     const user = await User.findById(req.user.id);
+    if(!user) return res.status(400).json({ msg: "User does not exist" });
+
+    // Get the user's credentials
     const { tokens } = user.apis.google_drive;
 
-    var sheet_data = await client.get_sheet(tokens, sheet_id);
+    // Make request from client
+    const options = {
+        sheet_id,
+        sheet_name,
+        select_1,
+        select_2
+    }
+    var sheet_data = await client.get_sheet(tokens, options);
     res.json({ matrix: sheet_data.data });
 })
 
