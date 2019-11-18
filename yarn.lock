@@ -1346,6 +1346,11 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
+matrix-slicer@^2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/matrix-slicer/-/matrix-slicer-2.8.0.tgz#9003aef7bbf4f1f0488bc1c22f4db0ff3d005ea5"
+  integrity sha1-kAOu97v08fBIi8HCL02w/z0AXqU=
+
 media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
