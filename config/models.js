@@ -18,7 +18,10 @@ const UserSchema = new Schema({
 })
 
 UserSchema.methods.getBasicData = function() {
-    return { email: this.email }
+    return { 
+        email: this.email,
+        id: this._id
+    }
 }
 
 const User = mongoose.model('User', UserSchema);
