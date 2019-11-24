@@ -5,7 +5,7 @@ const authMiddleware = require('../middleware/auth');
 const client = require('../public/js/GoogleClient');
 
 router.get('/google/auth', authMiddleware, async (req, res) => {
-    res.json({ msg: client.get_auth_uri(req.user.id) });
+    res.json({ url: client.get_auth_uri(req.user.id) });
 })
 
 router.get('/google/redirect_uri', async (req, res) => {
@@ -23,9 +23,9 @@ router.get('/google/redirect_uri', async (req, res) => {
     user.apis.google_drive.tokens = tokens;
 
     user.save()
-        .then(savedUser => {
-            res.json( { user: savedUser.getBasicData(), tokenBack: tokens, savedTokens: savedUser.apis.google_drive.tokens });
+        .then(() => {
             // Here we need to redirect to the front end application
+            res.redirect(state.app_redirect);
         })
         .catch(err => {
             res.status(500).json(err);

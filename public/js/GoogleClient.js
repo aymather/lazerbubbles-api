@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const fs = require('fs');
+const PORT = process.env.PORT;
 const { google } = require('googleapis');
 var credentials_path = 'public/js/google_drive_credentials.json';
 var {
@@ -22,7 +23,8 @@ class GoogleClient {
         const hash = crypto.randomBytes(64).toString('hex');
         const state = JSON.stringify({
             hash,
-            user_id
+            user_id,
+            app_redirect: `localhost:${PORT}/dashboard`
         })
         return this.OAuth2Client.generateAuthUrl({ 
             scope: this.scopes, 
