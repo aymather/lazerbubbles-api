@@ -20,7 +20,8 @@ const UserSchema = new Schema({
 UserSchema.methods.getBasicData = function() {
     return { 
         email: this.email,
-        id: this._id
+        id: this._id,
+        google_api: this.apis.google_drive.tokens
     }
 }
 
