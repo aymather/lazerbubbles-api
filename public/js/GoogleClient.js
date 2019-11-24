@@ -24,7 +24,7 @@ class GoogleClient {
         const state = JSON.stringify({
             hash,
             user_id,
-            app_redirect: `localhost:${PORT}/dashboard`
+            app_redirect: `http://localhost:${PORT}/dashboard`
         })
         return this.OAuth2Client.generateAuthUrl({ 
             scope: this.scopes, 
