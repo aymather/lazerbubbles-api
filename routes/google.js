@@ -25,10 +25,10 @@ router.get('/google/redirect_uri', async (req, res) => {
     user.save()
         .then(savedUser => {
             // Here we need to redirect to the front end application
-            res.json(savedUser);
+            res.render('GoogleRedirect', savedUser);
         })
         .catch(err => {
-            res.status(500).json(err);
+            res.render('AuthError', err);
         })
 })
 

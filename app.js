@@ -5,6 +5,7 @@ const MONGO_URI = process.env.MONGO_URI;
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 
 // Init
 const app = express();
@@ -28,6 +29,10 @@ app.use(bodyParser.json());
 
 // Allow access to public folder
 app.use(express.static('public'))
+
+// EJS template engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 // Routes
 app.use('/', require('./routes/auth'));
