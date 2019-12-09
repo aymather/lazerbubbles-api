@@ -5,7 +5,7 @@ const authMiddleware = require('../middleware/auth');
 const client = require('../public/js/GoogleClient');
 
 router.post('/google/redirect_uri', authMiddleware, async (req, res) => {
-    const { access_token } = req.query;
+    const { access_token } = req.body;
 
     const user = await User.findById(req.user.id);
 
@@ -38,6 +38,7 @@ router.get('/google/sheets', authMiddleware, async (req, res) => {
         files: data.data.files,
         nextPageToken: data.data.nextPageToken
     });
+
 })
 
 router.get('/google/sheet', authMiddleware, async (req, res) => {
