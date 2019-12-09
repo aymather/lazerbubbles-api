@@ -4,31 +4,19 @@ const User = require('../config/models');
 const authMiddleware = require('../middleware/auth');
 const client = require('../public/js/GoogleClient');
 
-router.get('/google/auth', authMiddleware, async (req, res) => {
-    res.json({ url: client.get_auth_uri(req.user.id) });
-})
+router.post('/google/redirect_uri', authMiddleware, async (req, res) => {
+    const { access_token } = req.query;
 
-router.get('/google/redirect_uri', async (req, res) => {
-    const { code, state } = req.query;
+    const user = await User.findById(req.user.id);
 
-    // Exchage the one-time code for an access token
-    var response = await client.get_access_token(code);
-
-    // Save access_token to database
-    var { tokens } = response;
-    var user = await User.findById(JSON.parse(state).user_id);
-    if(!user){
-        return res.status(400).json({ msg: "User id does not exist, this request may have been tampered with by a CSRF attack" });
-    }
-    user.apis.google_drive.tokens = tokens;
+    user.apis.google_drive.tokens = access_token;
 
     user.save()
-        .then(savedUser => {
-            // Here we need to redirect to the front end application
-            res.render('GoogleRedirect', savedUser);
+        .then(() => {
+            res.json({ msg: "Success!" });
         })
         .catch(err => {
-            res.render('AuthError', err);
+            res.status(500).json({ msg: "Internal server error" });
         })
 })
 

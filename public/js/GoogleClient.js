@@ -2,12 +2,12 @@ const crypto = require('crypto');
 const fs = require('fs');
 const PORT = process.env.PORT;
 const { google } = require('googleapis');
-var credentials_path = 'public/js/google_drive_credentials.json';
+var credentials_path = 'public/js/graphitti_client_secret.json';
 var {
     client_id,
     client_secret,
     redirect_uris
-} = JSON.parse(fs.readFileSync(credentials_path)).web;
+} = JSON.parse(fs.readFileSync(credentials_path)).installed;
 const OAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
 
 class GoogleClient {
