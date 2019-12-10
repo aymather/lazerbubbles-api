@@ -74,13 +74,13 @@ router.get('/google/sheet', authMiddleware, async (req, res) => {
 })
 
 router.get('/google/sheet-details', authMiddleware, async (req, res) => {
-    const { sheet_id } = req.query;
+    const { id } = req.query;
     
     // Get the user's credentials
     const user = await User.findById(req.user.id);
     const { tokens } = user.apis.google_drive;
 
-    client.get_sheet_details(tokens, sheet_id)
+    client.get_sheet_details(tokens, id)
         .then(response => {
             res.json(response);
         })
