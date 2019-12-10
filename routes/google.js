@@ -85,7 +85,8 @@ router.get('/google/sheet-details', authMiddleware, async (req, res) => {
             res.json(response);
         })
         .catch(err => {
-            res.status(500).json({ msg: "Something went wrong" });
+            console.log(err);
+            res.status(500).json(err);
         })
 })
 
