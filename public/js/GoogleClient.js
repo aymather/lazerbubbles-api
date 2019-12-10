@@ -64,6 +64,18 @@ class GoogleClient {
             range: `${options.sheet_name}!${options.select_1}:${options.select_2}`
         })
     }
+
+    get_sheet_details(credentials, id) {
+        // Set credentials
+        this.OAuth2Client.setCredentials(credentials);
+
+        // Create the google sheets client
+        const sheets = google.sheets({ version: 'v4', auth: this.OAuth2Client });
+
+        return sheets.spreadsheets.get({
+            spreadsheetId: id
+        })
+    }
 }
 
 module.exports = new GoogleClient();
