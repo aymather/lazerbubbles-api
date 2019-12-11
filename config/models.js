@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const SandboxSchema = new Schema({
     majorDimension: { type: String },
     range: { type: String },
-    matrix: { type: Array, required: true }
+    values: { type: Array, required: true }
 })
 
 const UserSchema = new Schema({
