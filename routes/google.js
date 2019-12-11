@@ -74,10 +74,10 @@ router.get('/google/sheet', authMiddleware, async (req, res) => {
     var sheet_data = await client.get_sheet(tokens, options);
 
     // Instantiate a new "sandbox" and insert into user's mongodb document
-    user.Sandboxes.push(sheet_data);
+    user.Sandboxes.push(sheet_data.data);
     user.save();
 
-    res.json({ matrix: sheet_data.data });
+    res.json(sheet_data.data);
 })
 
 router.get('/google/sheet-details', authMiddleware, async (req, res) => {
