@@ -1,10 +1,21 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+
 const SandboxSchema = new Schema({
     majorDimension: { type: String },
     range: { type: String },
     values: { type: Array, required: true }
+})
+
+const MessageSchema = new Schema({
+    message: { type: String },
+    timestamp: { type: Date, default: new Moment() }
+})
+
+const ConversationSchema = new Schema({
+    messages: [MessageSchema],
+    created_at: { type: Date, default: new Date() }
 })
 
 const UserSchema = new Schema({
@@ -21,7 +32,8 @@ const UserSchema = new Schema({
             }
         }
     },
-    Sandboxes: [SandboxSchema]
+    Sandboxes: [SandboxSchema],
+    Conversations: [ConversationSchema]
 })
 
 UserSchema.methods.getBasicData = function() {
