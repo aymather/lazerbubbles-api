@@ -33,8 +33,8 @@ const UserSchema = new Schema({
             }
         }
     },
-    Sandboxes: [SandboxSchema],
-    Conversations: [ConversationSchema]
+    sandboxes: [SandboxSchema],
+    conversations: [ConversationSchema]
 })
 
 UserSchema.methods.getBasicData = function() {
