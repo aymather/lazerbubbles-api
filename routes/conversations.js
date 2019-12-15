@@ -9,18 +9,19 @@ const User = require('../config/models');
 router.get('/conversations', authMiddleware, async (req, res) => {
     const user = await User.findById(req.user.id);
 
-    
+    res.json({ msg: "Conversations" });
 })
 
 /**
  * @param id
  * @returns Conversation between current user and a specific other user
  */
-router.get('/conversations', authMiddleware, async (req, res) => {
-    const current_user = await User.findById(req.user.id);
-    const other_user = await User.findById(req.params.id);
+router.get('/conversations/id', authMiddleware, async (req, res) => {
+    // const current_user = await User.findById(req.user.id);
+    // const other_user = await User.findById(req.params.id);
 
-    current_user.conversations
+    // current_user.conversations
+    res.json({ msg: "Conversation by id" });
 })
 
 module.exports = router;

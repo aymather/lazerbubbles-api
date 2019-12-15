@@ -37,6 +37,8 @@ app.set('views', path.join(__dirname, 'views'));
 // Routes
 app.use('/', require('./routes/auth'));
 app.use('/', require('./routes/google'));
+app.use('/', require('./routes/sandboxes'));
+app.use('/', require('./routes/conversations'));
 
 app.listen(PORT, () => {
     console.log(`App listening on port: ${PORT}`);
