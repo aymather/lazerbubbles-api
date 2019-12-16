@@ -16,15 +16,15 @@ router.get('/sandboxes', authMiddleware, async (req, res) => {
     res.json(sandboxes);
 })
 
-router.get('/sandbox', authMiddleware, async (req, res) => {
-    const { id } = req.params;
+router.get('/sandbox/data', authMiddleware, async (req, res) => {
+    const { id } = req.query;
 
     const user = await User.findById(req.user.id);
 
-    const sandbox = user.sandboxes.id(id);
+    const data = user.sandboxes.id(id).values;
 
-    if(sandbox){
-        return res.json(sandbox);
+    if(data){
+        return res.json(data);
     } else {
         return res.status(400).json({ msg: "No sandbox by that id" });
     }
