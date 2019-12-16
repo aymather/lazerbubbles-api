@@ -16,6 +16,20 @@ router.get('/sandboxes', authMiddleware, async (req, res) => {
     res.json(sandboxes);
 })
 
+router.get('/sandbox', authMiddleware, async (req, res) => {
+    const { id } = req.params;
+
+    const user = await User.findById(req.user.id);
+
+    const sandbox = user.sandboxes.id(id);
+
+    if(sandbox){
+        return res.json(sandbox);
+    } else {
+        return res.status(400).json({ msg: "No sandbox by that id" });
+    }
+})
+
 router.get('/sandboxes/delete', authMiddleware, async (req, res) => {
     const { sandbox_id } = req.params;
 
