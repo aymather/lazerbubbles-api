@@ -30,6 +30,10 @@ router.get('/google/sheets', authMiddleware, async (req, res) => {
     // Extract the user's token information
     var { tokens } = user.apis.google_drive;
 
+    if(!tokens){
+        return res.status(400).json({ msg: "User not connected to google" });
+    }
+
     // Use that to get a list of the google sheets
     var data = await client.get_google_sheets(tokens, nextPageToken);
 
