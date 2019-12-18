@@ -21,7 +21,7 @@ router.get('/sandbox/data', authMiddleware, async (req, res) => {
 
     const user = await User.findById(req.user.id);
 
-    const data = user.sandboxes.id(id).values;
+    const data = user.sandboxes.id(id).matrix;
 
     if(data){
         return res.json(data);
