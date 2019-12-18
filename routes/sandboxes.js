@@ -46,4 +46,31 @@ router.get('/sandboxes/delete', authMiddleware, async (req, res) => {
         })
 })
 
+router.post('/sandbox/create', authMiddleware, async (req, res) => {
+    const { name, matrix, details } = req.body;
+
+    // Make sure they have the required inputs
+    if(!name || !matrix){
+        return res.status(400).json({ msg: 'Name or matrix missing from request' });
+    }
+
+    const user = await User.findById(req.user.id);
+    
+    // Instantiate a new "sandbox" and insert into user's mongodb document
+    user.sandboxes.push({
+        name: name,
+        matrix: matrix,
+        details: details
+    });
+
+    user.save()
+        .then(savedUser => {
+            res.json(savedUser.sandboxes[savedUser.sandboxes.length - 1]);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500);
+        })
+})
+
 module.exports = router;

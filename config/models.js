@@ -4,9 +4,10 @@ const Moment = require('moment');
 
 
 const SandboxSchema = new Schema({
-    majorDimension: { type: String },
-    range: { type: String },
-    values: { type: Array, required: true }
+    created_at: { type: Date, default: new Moment() },
+    details: { type: Object },
+    name: { type: String, required: true },
+    matrix: { type: Array, required: true }
 })
 
 const MessageSchema = new Schema({
