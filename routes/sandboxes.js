@@ -9,7 +9,7 @@ router.get('/sandboxes', authMiddleware, async (req, res) => {
     const sandboxes = user.sandboxes.map(sandbox => {
         return {
             id: sandbox._id,
-            name: sandbox.range
+            name: sandbox.name
         }
     })
 
