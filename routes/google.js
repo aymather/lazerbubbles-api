@@ -30,7 +30,7 @@ router.get('/google/sheets', authMiddleware, async (req, res) => {
     // Extract the user's token information
     var { tokens } = user.apis.google_drive;
 
-    if(!tokens){
+    if(!tokens.access_token){
         return res.status(400).json({ msg: "User not connected to google" });
     }
 
