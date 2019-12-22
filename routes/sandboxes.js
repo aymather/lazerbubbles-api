@@ -7,10 +7,7 @@ router.get('/sandboxes', authMiddleware, async (req, res) => {
     const user = await User.findById(req.user.id);
 
     const sandboxes = user.sandboxes.map(sandbox => {
-        return {
-            id: sandbox._id,
-            name: sandbox.name
-        }
+        return sandbox.getBasicData()
     })
 
     res.json(sandboxes);
@@ -65,7 +62,10 @@ router.post('/sandbox/create', authMiddleware, async (req, res) => {
 
     user.save()
         .then(savedUser => {
-            res.json(savedUser.sandboxes[savedUser.sandboxes.length - 1]);
+            // We want to return the data in the same format
+            // as the "GET /sandboxes" route
+            const newSandbox = savedUser.sandboxes[savedUser.sandboxes.length - 1];
+            res.json(newSandbox.getBasicData());
         })
         .catch(err => {
             console.log(err);

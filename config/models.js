@@ -10,6 +10,13 @@ const SandboxSchema = new Schema({
     matrix: { type: Array, required: true }
 })
 
+SandboxSchema.methods.getBasicData = function() {
+    return {
+        name: this.name,
+        id: this._id
+    }
+}
+
 const MessageSchema = new Schema({
     message: { type: String },
     timestamp: { type: Date, default: new Moment() }
