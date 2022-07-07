@@ -20,7 +20,7 @@
     "googleapis": "^45.0.0",
     "jsonwebtoken": "^8.5.1",
     "matrix-slicer": "^2.8.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "mongoose": "^5.7.10",
     "nodemon": "^1.19.4"
   }
